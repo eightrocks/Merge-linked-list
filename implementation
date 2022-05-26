@@ -1,0 +1,86 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){
+    if (!list1 && !list2) {
+        return list1;
+    }
+    if (!list1 && list2) {
+        return list2;
+    }
+    if (list1 && !list2) {
+        return list1;
+    }
+    
+    struct ListNode *new = malloc(sizeof(struct ListNode));
+    struct ListNode *first_first_node = list1;
+    struct ListNode *first_second_node = list2;
+    
+    int count = 0;
+    struct ListNode *pos = new;
+    while (first_first_node || first_second_node) { //not null
+     if (first_first_node && first_second_node) {
+        if (first_first_node->val <= first_second_node->val) {
+            if (!count) {
+                new->val = first_first_node->val;
+                count = 1;
+                first_first_node = first_first_node->next;
+                continue;
+            }
+            struct ListNode *node = malloc(sizeof(struct ListNode));
+            node->val = first_first_node->val;
+            node->next = NULL;
+            pos->next = node;
+            pos = node;
+            first_first_node = first_first_node->next;
+        } else {
+            if (!count) {
+                new->val = first_second_node->val;
+                count = 1;
+                first_second_node = first_second_node->next;
+                continue;
+            }
+            struct ListNode *node = malloc(sizeof(struct ListNode));
+            node->val = first_second_node->val;
+            node->next = NULL;
+            pos->next = node;
+            pos = node;
+            first_second_node = first_second_node->next;
+        }
+    } else if (first_first_node && !first_second_node) {
+         if (!count) {
+                new->val = first_first_node->val;
+                count = 1;
+                first_first_node = first_first_node->next;
+                continue;
+            }
+         struct ListNode *node = malloc(sizeof(struct ListNode));
+         node->val = first_first_node->val;
+          node->next = NULL;
+            pos->next = node;
+            pos = node;
+            first_first_node = first_first_node->next;
+     } else {
+         if (!count) {
+                new->val = first_second_node->val;
+                count = 1;
+                first_second_node = first_second_node->next;
+                continue;
+            }
+            struct ListNode *node = malloc(sizeof(struct ListNode));
+            node->val = first_second_node->val;
+            node->next = NULL;
+            pos->next = node;
+            pos = node;
+            first_second_node = first_second_node->next;
+                     }
+                }
+    return new;
+    
+}
